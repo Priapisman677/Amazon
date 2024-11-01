@@ -2,6 +2,7 @@
 
 
 let productsHTML = ''
+//*"Products" point to the products.js file:
 products.forEach((product_param, index) =>{
   //* I will temporarily leave the parameter as "product_param" just to show how we access the properties using the name of the parameter not the name of the object itself.
   productsHTML += `
@@ -48,11 +49,53 @@ products.forEach((product_param, index) =>{
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary js-add-to-cart"
+                   // * What is down here is called data attribute. This way we can store any kind of data inside of an element and access it or change it without having to use document.querySelector('.').innerHTML.
+          // *It is important that the attribute starts with "data-" Then we can name it whatever we want. However Please note that it needs to be converted to camel case when we use it in JavaScript (product-name :: productName). 
+        // * Also notice that we removed the word data
+          data-product-id="${product_param.id}">
             Add to Cart
           </button>
         </div>
   `
 })
-
 document.querySelector('.products-grid').innerHTML = productsHTML;
+
+
+// *What is belloww  is executed just once when we reload the page, Basically we added event listeners to all the buttons but just once:
+
+document.querySelectorAll('.js-add-to-cart')
+  .forEach((button) => {
+    button.addEventListener('click', () =>{addToCartList(button)});
+  });
+
+  function addToCartList(button_param){
+    const productId = button_param.dataset.productId;
+    //*Down here "matchingItem" and "existingItem" could be the same variable and use ONLY "existingItem" to become trueTHY or falsY. I will leave it at so for a moment since it could get confusing.
+    let matchingItem
+    let existingItem
+    cart.forEach((item) =>{
+      if (productId === item.productId){
+        matchingItem = true;
+        //* "Item" will be of the type object and is the one that we save on commented code 'B'
+        existingItem = item;
+        
+      }
+    })
+    if(matchingItem){
+      //*Down here we update the property of the object REFERENCE
+      existingItem.quantity += 1;
+      console.log('True')
+    }
+    
+      if(!matchingItem){
+         //* B
+        cart.push({
+          productId: productId,
+          quantity: 1,
+        }); 
+        console.log('False')
+    }
+  console.log(cart)  
+}
+
