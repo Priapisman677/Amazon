@@ -68,30 +68,34 @@ document.querySelector('.products-grid').innerHTML = productsHTML;
 
 document.querySelectorAll('.js-add-to-cart')
   .forEach((button) => {
-    button.addEventListener('click', () =>{addToCartList(button)});
+    button.addEventListener('click', () =>{
+      //* Super simple dot debt declared 'productId' here at 12:47:00
+      addToCart(button)
+      updateCartQuantity()
+      // console.log('cart:', cart)
+    });
   });
 
   
 
-  function addToCartList(button_param){
+function addToCart(button_param){
     
-
     const productId = button_param.dataset.productId;
-    //*Down here "matchingItem" and "existingItem" could be the same variable and use ONLY "existingItem" to become trueTHY or falsY. I will leave it at so for a moment since it could get confusing.
+    //*Down here "matchingItem" and "existingItem" could be the same variable and use ONLY "existingItem" to become trueTHY or falsY. I will leave it as is for a moment since it could get confusing.
     let matchingItem
     let existingItem
-    cart.forEach((item) =>{
-      if (productId === item.productId){
+    //*In the following loop we will check if the item already exists, If the cart is empty it will not enter the loop.
+    cart.forEach((cartItem) =>{
+      if (productId === cartItem.productId){
         matchingItem = true;
-        //* "Item" will be of the type object and is the one that we save on commented code 'B'
-        existingItem = item;
-        
+        //* "cartItem" will be of the type object ( R E F E R E N C E  ^-^ ) and is the one that we save on commented code 'B'. "existingItem" will be a reference to the same object as "item" and we will be able to update the quantity of the object.
+        existingItem = cartItem;
       }
     })
     if(matchingItem){
       //*Down here we update the property of the object REFERENCE
-      existingItem.quantity += 1;
-      console.log('True')
+                  existingItem.quantity += 1;
+      //* we couldn't put this^ inside of the forEach loop because we would be updating the quantity of the object every time we loop through the cart.
     }
     
       if(!matchingItem){
@@ -100,12 +104,16 @@ document.querySelectorAll('.js-add-to-cart')
           productId: productId,
           quantity: 1,
         }); 
-        console.log('False')
-    }
+    } 
 
     //*Updating the cart quantity
-    let carQuantity = 0;
-   cart.forEach((item) => {carQuantity += item.quantity})
-      document.querySelector('.cart-quantity').innerHTML = carQuantity; 
+
 }
 
+function updateCartQuantity(){
+    let carQuantity = 0;
+    cart.forEach((cartItem) => {
+      carQuantity += cartItem.quantity
+    });
+    document.querySelector('.cart-quantity').innerHTML = carQuantity; 
+}
