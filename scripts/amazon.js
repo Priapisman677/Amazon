@@ -1,4 +1,6 @@
 import{ cart as myCart} from '../data/cart.js';
+import{ products } from '../data/products.js';
+console.log("🚀 ~ products[1]:", products[1])
 const cart = [];
 
 let productsHTML = ''
