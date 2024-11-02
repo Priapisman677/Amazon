@@ -1,5 +1,5 @@
-
-
+import{ cart as myCart} from '../data/cart.js';
+const cart = [];
 
 let productsHTML = ''
 //*"Products" point to the products.js file:
@@ -51,8 +51,8 @@ products.forEach((product_param, index) =>{
 
           <button class="add-to-cart-button button-primary js-add-to-cart"
                    // * What is down here is called data attribute. This way we can store any kind of data inside of an element and access it or change it without having to use document.querySelector('.').innerHTML.
-          // *It is important that the attribute starts with "data-" Then we can name it whatever we want. However Please note that it needs to be converted to camel case when we use it in JavaScript (product-name :: productName). 
-        // * Also notice that we removed the word data
+          // *It is important that the attribute starts with "data-" Then we can name it whatever we want. However Please note that it needs to be converted to camel case when we use it in JavaScript (data-product-name :: productName). 
+        // * Also notice that we removed the word data.
           data-product-id="${product_param.id}">
             Add to Cart
           </button>
