@@ -69,7 +69,11 @@ document.querySelectorAll('.js-add-to-cart')
     button.addEventListener('click', () =>{addToCartList(button)});
   });
 
+  
+
   function addToCartList(button_param){
+    
+
     const productId = button_param.dataset.productId;
     //*Down here "matchingItem" and "existingItem" could be the same variable and use ONLY "existingItem" to become trueTHY or falsY. I will leave it at so for a moment since it could get confusing.
     let matchingItem
@@ -96,6 +100,10 @@ document.querySelectorAll('.js-add-to-cart')
         }); 
         console.log('False')
     }
-  console.log(cart)  
+
+    //*Updating the cart quantity
+    let carQuantity = 0;
+   cart.forEach((item) => {carQuantity += item.quantity})
+      document.querySelector('.cart-quantity').innerHTML = carQuantity; 
 }
 
