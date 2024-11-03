@@ -1,4 +1,7 @@
-export let cart = [
+export let cart =
+JSON.parse(localStorage.getItem('cart'))
+||
+[
   {
   productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
   quantity: 2,
@@ -8,6 +11,9 @@ export let cart = [
   quantity: 1,
 }
 ];
+function saveToStorage(){
+  localStorage.setItem('cart', JSON.stringify(cart))
+}
 
 export function addToCart(button_param){ 
   const productId = button_param.dataset.productId;
@@ -34,7 +40,10 @@ export function addToCart(button_param){
         productId: productId,
         quantity: 1,
       }); 
-  } 
+  }
+  //*Since this function updates the card we will call the following function here:
+  //*Next we won't do it as well for commented code 'C' below since We also update the card there
+  saveToStorage() 
 }
 
 export function removeFromCart(productId){
@@ -50,5 +59,7 @@ export function removeFromCart(productId){
   cart = cart.filter((cartItem) =>{
     return cartItem.productId !== productId;
   })
+  //*C:
+  saveToStorage();
 
 }
