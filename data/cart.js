@@ -1,11 +1,13 @@
-export const cart = [{
+export let cart = [
+  {
   productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
   quantity: 2,
 },
 {
   productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
   quantity: 1,
-}];
+}
+];
 
 export function addToCart(button_param){ 
   const productId = button_param.dataset.productId;
@@ -16,7 +18,7 @@ export function addToCart(button_param){
   cart.forEach((cartItem) =>{
     if (productId === cartItem.productId){
       matchingItem = true;
-      //* "cartItem" will be of the type object ( R E F E R E N C E  ^-^ ) and is the one that we save on commented code 'B'. "existingItem" will be a reference to the same object as "item" and we will be able to update the quantity of the object.
+      //* "cartItem" will be of the type object ( R E F E R E N C E  ^-^ ) and is the one that we pushed on commented code 'B'. "existingItem" will be a reference to the same object as "cartItem" and we will be able to update the quantity of the object outside of the loop.
       existingItem = cartItem;
     }
   })
@@ -26,11 +28,27 @@ export function addToCart(button_param){
     //* we couldn't put this^ inside of the forEach loop because we would be updating the quantity of the object every time we loop through the cart.
   }
   
-    if(!matchingItem){
+    else{
        //* B
       cart.push({
         productId: productId,
         quantity: 1,
       }); 
   } 
+}
+
+export function removeFromCart(productId){
+  // *One way to go through this function is by creating a new cart like in the commented code below (SSD-13:37:40).
+  // const newCart = []
+  // cart.forEach((cartItem) =>{
+  //   if( cartItem.productId !== productId){
+  //     newCart.push(cartItem)
+  //   }
+  // });
+  // cart = newCart;
+  //*However, we can also use the filter method to create a new array with the elements that pass the condition. Remember to type "cart = "
+  cart = cart.filter((cartItem) =>{
+    return cartItem.productId !== productId;
+  })
+
 }
