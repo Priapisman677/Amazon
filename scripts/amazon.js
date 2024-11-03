@@ -3,11 +3,11 @@ import{ cart, addToCart} from '../data/cart.js';
 import{ products } from '../data/products.js';
 
 
-
+//*Generating the HTML for the main page based on number of products (we loop *for each product*).
 let productsHTML = ''
 //*"Products" point to the products.js file:
 products.forEach((product_param, index) =>{
-  //* I will temporarily leave the parameter as "product_param" just to show how we access the properties using the name of the parameter not the name of the object itself.
+  //* I will temporarily leave the parameter as "product_param" just to show how we access the properties using the name of the parameter not the name or index of the object itself.
   productsHTML += `
   <div class="product-container">
           <div class="product-image-container">
@@ -70,7 +70,7 @@ document.querySelector('.products-grid').innerHTML = productsHTML;
 document.querySelectorAll('.js-add-to-cart')
   .forEach((button) => {
     button.addEventListener('click', () =>{
-      //* Super simple dot debt declared 'productId' here at 12:47:00
+      //* SuperSimpleDev  declared 'productId' differently here at 12:47:00
       addToCart(button)
       updateCartQuantity()
       // console.log('cart:', cart)
