@@ -1,6 +1,6 @@
  import { cart } from '../data/cart.js';
  import { products } from '../data/products.js';
-
+ import { formatCurrency } from './utils/money.js'
 //*We will be saving all of the HTML in the next variable:
 let cartSummaryHTML =''
 
@@ -36,7 +36,8 @@ let cartSummaryHTML =''
                   ${matchingProduct.name}
                 </div>
                 <div class="product-price">
-                ${(matchingProduct.priceCents/100).toFixed(2)}
+                <!-- //*formatCurrency() is imported from a module -->
+                ${formatCurrency(matchingProduct.priceCents)}
                 </div>
                 <div class="product-quantity">
                   <span>
@@ -58,7 +59,7 @@ let cartSummaryHTML =''
                 <div class="delivery-option">
                   <input type="radio" checked
                     class="delivery-option-input"
-                    name="delivery-option-1">
+                    name="${matchingProduct.id}">
                   <div>
                     <div class="delivery-option-date">
                       Tuesday, June 21
@@ -71,7 +72,7 @@ let cartSummaryHTML =''
                 <div class="delivery-option">
                   <input type="radio"
                     class="delivery-option-input"
-                    name="delivery-option-1">
+                    name="${matchingProduct.id}">
                   <div>
                     <div class="delivery-option-date">
                       Wednesday, June 15
@@ -84,7 +85,7 @@ let cartSummaryHTML =''
                 <div class="delivery-option">
                   <input type="radio"
                     class="delivery-option-input"
-                    name="delivery-option-1">
+                    name="${matchingProduct.id}">
                   <div>
                     <div class="delivery-option-date">
                       Monday, June 13
