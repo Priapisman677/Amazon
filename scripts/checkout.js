@@ -117,7 +117,7 @@ let cartSummaryHTML =''
         const container = document.querySelector(`.js-cart-item-container-${productId}`);
         container.remove();
         
-        console.log("🚀 ~ link.addEventListener ~ container:", container)
+     
       }
     );
     }
