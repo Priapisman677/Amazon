@@ -83,10 +83,13 @@ document.querySelectorAll('.js-add-to-cart')
 
 
 //*Updating the cart quantity
+
 function updateCartQuantity(){
+  console.log(cart)
     let carQuantity = 0;
     cart.forEach((cartItem) => {
       carQuantity += cartItem.quantity
     });
     document.querySelector('.cart-quantity').innerHTML = carQuantity; 
 }
+updateCartQuantity()
