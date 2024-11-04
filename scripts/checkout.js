@@ -6,18 +6,15 @@
  import { deliveryOptions } from '../data/deliveryOptions.js';
 
  
-// const today = dayjs()
-// const deliveryDate = today.add(10, 'years');
 
 
 //We will be saving all of the HTML in the next variable:
   let cartSummaryHTML =''
 
- //Down here we loop through all the items in the cart (right now 2 by default.) Because we want to create the check out tab. Next... ... ..
- cart.forEach((cartItem) =>{
+ //*Down here we loop through all the items in the cart (right now 2 by default.) Because we want to create the check out tab. Next... ... ..
+cart.forEach((cartItem) =>{
   //... ... ... Next, We save the ID of the cart item in order for us to match it with an ID of the products list and get the information from it.
   const productId = cartItem.productId
-  
    let matchingProduct;
   //... ... ... Next, We loop through the products list. It is a list of objects containing all the necessary information given an ID: Then, when a match IS MET, we save that information (full object) in the currently empty variable "matchingProduct"
   // "matchingProduct" Will contain all the information of the product.
@@ -25,16 +22,27 @@
     if (product.id === productId){
       matchingProduct = product;
       //! be careful and see how the list 'products' items have a property called '.id' while the  list 'cart' items have a property called ".productId"
-    }
-  })
+    }})
 
-   //! Here I totally skipped a part of the video that puts the delivery date for each item on the checkout page. the part of the video was at 14:41:00
+   //Nov 3 10:30p.m: Putting the delivery date for each item on the checkout page. The part of the video was at 14:41:00:
+   const deliveryOptionId = cartItem.deliveryOptionId;
+   let deliveryOption;
+   deliveryOptions.forEach((option) =>{
+    if(option.id === deliveryOptionId){
+      deliveryOption = option;
+    }
+   })
+// Nov 3: copy-pasted code to get the date:
+      const today = dayjs();
+        const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
+        //*1.- Date:
+        const dateString = deliveryDate.format('dddd, MMMM D')
 
    cartSummaryHTML+= `
           <div class="cart-item-container 
             js-cart-item-container-${matchingProduct.id}">
              <div class="delivery-date">
-              Delivery date: Tuesday, June 21
+              Delivery date: ${dateString}
             </div>
 
             <div class="cart-item-details-grid">
@@ -68,29 +76,37 @@
                 <div class="delivery-options-title">
                   Choose a delivery option:
                 </div>
-                ${deliveryOptionsHTML(matchingProduct)}
+                ${deliveryOptionsHTML(matchingProduct, cartItem)}
               </div>
             </div>
           </div>
           `
-  //*Creating the HTML for each delivery option of ALL CHHECKOUT ITEMS (based on current date)To then insert it in the main HTML for the checkout:
- });
-function deliveryOptionsHTML(matchingProduct){
+});
+//We need to update the HTML just once and it has to be outside of the loop if we don't want to create a lot of duplicates
+document.querySelector('.js-order-summary').innerHTML += cartSummaryHTML;
+
+
+//*Creating the HTML for each delivery option PRICE AND DATE of ALL CHECKOUT ITEMS (based on current date) To then insert it in the main HTML for the checkout:
+function deliveryOptionsHTML(matchingProduct, cartItem){
   let html = ''
   deliveryOptions.forEach((deliveryOption) =>{
     const today = dayjs();
     const deliveryDate = today.add(
       deliveryOption.deliveryDays, 'days'
     );
+    //1.- Date:
     const dateString = deliveryDate.format('dddd, MMMM D')
     // Below we use a ternary operator where if the condition is true we use the question mark value and if the condition is false we use the colon value:
-    const priceString = deliveryOption.priceCents 
-    === 0
-    ? 'Free'
-    : `$${formatCurrency(deliveryOption.priceCents)} -`;
+    // 2.- Price:
+    const priceString = deliveryOption.priceCents === 0 ? 'Free' : `$${formatCurrency(deliveryOption.priceCents)} -`;
+
+    // NOV 3 9:47p.m: Figuring out which delivery option should be checked (this is the only thing that is unique from the three iterations, the other three are the same for ALL PRODUCTS, you can confirm it): 
+    const isChecked = deliveryOption.id === cartItem.deliveryOptionId
+
       html +=
     `                <div class="delivery-option">
                   <input type="radio"
+                  ${isChecked ? 'checked' :''}
                     class="delivery-option-input"
                     name="${matchingProduct.id}">
                   <div>
@@ -106,18 +122,18 @@ function deliveryOptionsHTML(matchingProduct){
   return html
 }
 
- //*We need to update the HTML just once and it has to be outside of the loop if we don't want to create a lot of duplicates
- document.querySelector('.js-order-summary').innerHTML += cartSummaryHTML;
 
-//* Giving delete buttons functionality to remove items from the cart:
+
+//*Giving delete buttons functionality to remove items from the cart:
  document.querySelectorAll('.delete-quantity-link')
     .forEach((link) =>{
       link.addEventListener('click', ()=>{
         let productId = link.dataset.productId;
-        //* function from cart.js (Creating a new cart with the item filtered out):
+        //function from cart.js (Creating a new cart with the item filtered out):
         removeFromCart(productId)
         updateCheckOutquantity()
-        //  *Removing the item from the page:
+        //Removing the item from the page:
+        //!Maybe we could put the following inside of the removeFromCart(productId) function:
         const container = document.querySelector(`.js-cart-item-container-${productId}`);
         container.remove();
         
@@ -127,10 +143,7 @@ function deliveryOptionsHTML(matchingProduct){
     }
   );
 
-
-
-
-//*Updating check out quantity (2- in checkout tab now)
+// Updating check out quantity (2- in checkout tab now)
   function updateCheckOutquantity(){
     let quantity = 0;
     cart.forEach((cartItem) =>{

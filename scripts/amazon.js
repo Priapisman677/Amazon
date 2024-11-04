@@ -5,9 +5,9 @@ import { formatCurrency } from './utils/money.js'
 
 //*Generating the HTML for the main page based on number of products (we loop *for each product*).
 let productsHTML = ''
-//*"Products" point to the products.js file:
+//"Products" point to the products.js file:
 products.forEach((product_param, index) =>{
-  //* I will temporarily leave the parameter as "product_param" just to show how we access the properties using the name of the parameter not the name or index of the object itself.
+  // I will temporarily leave the parameter as "product_param" just to show how we access the properties using the name of the parameter not the name or index of the object itself.
   productsHTML += `
   <div class="product-container">
           <div class="product-image-container">
@@ -66,15 +66,14 @@ products.forEach((product_param, index) =>{
 document.querySelector('.products-grid').innerHTML = productsHTML;
 
 
-// *What is belloww  is executed just once when we reload the page, basically we added event listeners to all the buttons but just once:
+// What is belloww  is executed just once when we reload the page, basically we added event listeners to all the buttons but just once:
 
 document.querySelectorAll('.js-add-to-cart')
   .forEach((button) => {
     button.addEventListener('click', () =>{
-      //* SuperSimpleDev  declared 'productId' differently here at 12:47:00
+      // SuperSimpleDev  declared 'productId' differently here at 12:47:00
       addToCart(button)
       updateCartQuantity()
-      // console.log('cart:', cart)
     });
   });
 
@@ -82,10 +81,9 @@ document.querySelectorAll('.js-add-to-cart')
 
 
 
-//*Updating the cart quantity
+//Updating the cart quantity
 
 function updateCartQuantity(){
-  console.log(cart)
     let carQuantity = 0;
     cart.forEach((cartItem) => {
       carQuantity += cartItem.quantity
