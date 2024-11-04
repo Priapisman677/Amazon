@@ -1,4 +1,4 @@
- import { cart, removeFromCart } from '../data/cart.js';
+ import { cart, removeFromCart, updateDeliveryOption } from '../data/cart.js';
  import { products } from '../data/products.js';
  import formatCurrency from './utils/money.js'
  import { hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
@@ -87,6 +87,7 @@ document.querySelector('.js-order-summary').innerHTML += cartSummaryHTML;
 
 
 //*Creating the HTML for each delivery option PRICE AND DATE of ALL CHECKOUT ITEMS (based on current date) To then insert it in the main HTML for the checkout:
+//$ Nov 4 note: Normally we wouldn't have to make a function for this but we make it a function because we want to call it when we are creating the main HTML and we also need to pass parameters for the radio selector.
 function deliveryOptionsHTML(matchingProduct, cartItem){
   let html = ''
   deliveryOptions.forEach((deliveryOption) =>{
@@ -104,7 +105,9 @@ function deliveryOptionsHTML(matchingProduct, cartItem){
     const isChecked = deliveryOption.id === cartItem.deliveryOptionId
 
       html +=
-    `                <div class="delivery-option">
+    `           <div class="delivery-option js-delivery-option"
+                  data-product-id="${matchingProduct.id}"
+                  data-delivery-option-id="${deliveryOption.id}">
                   <input type="radio"
                   ${isChecked ? 'checked' :''}
                     class="delivery-option-input"
@@ -125,8 +128,7 @@ function deliveryOptionsHTML(matchingProduct, cartItem){
 
 
 //*Giving delete buttons functionality to remove items from the cart:
- document.querySelectorAll('.delete-quantity-link')
-    .forEach((link) =>{
+ document.querySelectorAll('.delete-quantity-link').forEach((link) =>{
       link.addEventListener('click', ()=>{
         let productId = link.dataset.productId;
         //function from cart.js (Creating a new cart with the item filtered out):
@@ -136,14 +138,22 @@ function deliveryOptionsHTML(matchingProduct, cartItem){
         //!Maybe we could put the following inside of the removeFromCart(productId) function:
         const container = document.querySelector(`.js-cart-item-container-${productId}`);
         container.remove();
-        
-        
-      }
-    );
-    }
-  );
+        });});
 
-// Updating check out quantity (2- in checkout tab now)
+//* Giving "delivery options's grid" functionality To modify the delivery option in your cart items.
+// Here we are targeting the three "delivery grids" that each product on the checkout has.
+  document.querySelectorAll('.js-delivery-option').forEach((element)=>{
+    element.addEventListener('click', ()=>{
+      //Down here we use the shorthand property for practice and it would be equal to:
+      // const productId = element.dataset.productId
+      // const deliveryOptionId = element.dataset.deliveryOptionId
+      const {productId, deliveryOptionId} = element.dataset
+      updateDeliveryOption(productId, deliveryOptionId)
+    });
+
+  });
+
+//* Updating check out quantity (2- in checkout tab now)
   function updateCheckOutquantity(){
     let quantity = 0;
     cart.forEach((cartItem) =>{
