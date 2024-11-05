@@ -3,9 +3,10 @@ import { products, getProduct } from '../../data/products.js';
 import formatCurrency from '../utils/money.js'
 import  dayjs  from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
+import {renderPaymentSummary} from './paymentSummary.js'
 
 //*Down here is the MAIN FUNCTION. We loop through all the items in the cart (right now 2 by default.) Because we want to create the check out tab.
-export function rendeOrderSummary(){ 
+export function renderOrderSummary(){ 
 //We will be saving all of the HTML in the next variable:
 let cartSummaryHTML =''
 cart.forEach((cartItem) =>{
@@ -117,8 +118,9 @@ cart.forEach((cartItem) =>{
            link.addEventListener('click', ()=>{
              let productId = link.dataset.productId;
              //function from cart.js (Creating a new cart with the item filtered out):
-             removeFromCart(productId)
-             updateCheckOutquantity()
+             removeFromCart(productId);
+             updateCheckOutquantity();
+             renderPaymentSummary();
              //Removing the item from the page:
              //!Maybe we could put the following inside of the removeFromCart(productId) function:
              const container = document.querySelector(`.js-cart-item-container-${productId}`);
@@ -135,7 +137,8 @@ cart.forEach((cartItem) =>{
            const {productId, deliveryOptionId} = element.dataset
            updateDeliveryOption(productId, deliveryOptionId)
            //--OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO CALL OF MAIN FUNCTION OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-           rendeOrderSummary()
+           renderOrderSummary()
+           renderPaymentSummary()
          });
 
        });
