@@ -15,8 +15,6 @@ export function renderPaymentSummary(){
     const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
     shippingPriceCents += deliveryOption.priceCents
   })
-    // console.log("🚀 ~ cart.forEach ~ productPriceCents:", productPriceCents)
-    // console.log("🚀 ~ cart.forEach ~ shippingPriceCents:", shippingPriceCents)
    const totalBeforeTaxCents = productPriceCents + shippingPriceCents
    const taxCents = totalBeforeTaxCents * 0.1;
    const totalCents = totalBeforeTaxCents + taxCents
@@ -55,6 +53,5 @@ export function renderPaymentSummary(){
             Place your order
           </button>
    `;
-
    document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
 }

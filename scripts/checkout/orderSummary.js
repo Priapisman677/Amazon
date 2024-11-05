@@ -12,12 +12,12 @@ let cartSummaryHTML =''
 cart.forEach((cartItem) =>{
  //... ... ... Next, We save the ID of the cart item in order for us to match it with an ID of the products list and get the information from it.
  const productId = cartItem.productId
- //$ Nov 4: Now we import the function from products.js so we can also use it in other places such as paymentSummaryy: 
+ // Nov 4: Now we import the function from products.js so we can also use it in other places such as paymentSummaryy: 
  const matchingProduct = getProduct(productId);
 
   
   const deliveryOptionId = cartItem.deliveryOptionId;
-   //$ Nov 4: Now we import the function from products.js so we can also use it in other places such as paymentSummary: 
+   // Nov 4: Now we import the function from products.js so we can also use it in other places such as paymentSummary: 
   const deliveryOption = getDeliveryOption(deliveryOptionId)
 
   //Nov 3 10:30p.m: Putting the delivery date for each item on the checkout page. The part of the video was at 14:41:00:
@@ -113,20 +113,6 @@ cart.forEach((cartItem) =>{
        return html
        }
 
-       //*Giving delete buttons functionality to remove items from the cart:
-     document.querySelectorAll('.delete-quantity-link').forEach((link) =>{
-           link.addEventListener('click', ()=>{
-             let productId = link.dataset.productId;
-             //function from cart.js (Creating a new cart with the item filtered out):
-             removeFromCart(productId);
-             updateCheckOutquantity();
-             renderPaymentSummary();
-             //Removing the item from the page:
-             //!Maybe we could put the following inside of the removeFromCart(productId) function:
-             const container = document.querySelector(`.js-cart-item-container-${productId}`);
-             container.remove();
-             });});
-
        //* Giving "delivery options's grid" event listeners To modify the delivery option in your cart items.
      // Here we are targeting the three "delivery grids" that each product on the checkout has.
        document.querySelectorAll('.js-delivery-option').forEach((element)=>{
@@ -140,8 +126,21 @@ cart.forEach((cartItem) =>{
            renderOrderSummary()
            renderPaymentSummary()
          });
-
        });
+
+       //*Giving delete buttons functionality to remove items from the cart:
+     document.querySelectorAll('.delete-quantity-link').forEach((link) =>{
+           link.addEventListener('click', ()=>{
+             let productId = link.dataset.productId;
+             //function from cart.js (Creating a new cart with the item filtered out):
+             removeFromCart(productId);
+             updateCheckOutquantity();
+             renderPaymentSummary();
+             renderOrderSummary()
+             });
+          });
+
+
 
        //* Updating check out quantity (2- in checkout tab now)
        function updateCheckOutquantity(){
