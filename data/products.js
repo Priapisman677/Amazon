@@ -1,9 +1,9 @@
 
 //*We are using the following function to find a matching product given an ID and get the information of the product such as name and price. We will export it because we use it twice, once ar OrderSummary and another at payment summary.
-export function getProduct(productId){
+export function getProduct(cartItemProductId){
   let matchingProduct;
   products.forEach((product) =>{
-    if (product.id === productId){
+    if (product.id === cartItemProductId){
       matchingProduct = product;
     }})
     return matchingProduct

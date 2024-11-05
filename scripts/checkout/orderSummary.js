@@ -2,7 +2,7 @@ import { cart, removeFromCart, updateDeliveryOption } from '../../data/cart.js';
 import { products, getProduct } from '../../data/products.js';
 import formatCurrency from '../utils/money.js'
 import  dayjs  from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
+import { deliveryOptions, getDeliveryOption, getDateString } from '../../data/deliveryOptions.js';
 import {renderPaymentSummary} from './paymentSummary.js'
 
 //*Down here is the MAIN FUNCTION. We loop through all the items in the cart (right now 2 by default.) Because we want to create the check out tab.
@@ -10,21 +10,17 @@ export function renderOrderSummary(){
 //We will be saving all of the HTML in the next variable:
 let cartSummaryHTML =''
 cart.forEach((cartItem) =>{
- //... ... ... Next, We save the ID of the cart item in order for us to match it with an ID of the products list and get the information from it.
- const productId = cartItem.productId
- // Nov 4: Now we import the function from products.js so we can also use it in other places such as paymentSummaryy: 
- const matchingProduct = getProduct(productId);
+  //... ... ... Next, We save the ID of the cart item in order for us to match it with an ID of the products list and get the information from it.
+  const cartItemProductId = cartItem.productId
+  // Nov 4: Now we import the function from products.js so we can also use it in other places such as paymentSummaryy: 
+  const matchingProduct = getProduct(cartItemProductId);
 
   
   const deliveryOptionId = cartItem.deliveryOptionId;
    // Nov 4: Now we import the function from products.js so we can also use it in other places such as paymentSummary: 
   const deliveryOption = getDeliveryOption(deliveryOptionId)
 
-  //Nov 3 10:30p.m: Putting the delivery date for each item on the checkout page. The part of the video was at 14:41:00:
-     const today = dayjs();
-       const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-       //*1.- Date:
-       const dateString = deliveryDate.format('dddd, MMMM D')
+       const dateString = getDateString(deliveryOption);
 
   cartSummaryHTML+= `
          <div class="cart-item-container 
@@ -79,12 +75,8 @@ cart.forEach((cartItem) =>{
      function deliveryOptionsHTML(matchingProduct, cartItem){
        let html = ''
        deliveryOptions.forEach((deliveryOption) =>{
-         const today = dayjs();
-         const deliveryDate = today.add(
-           deliveryOption.deliveryDays, 'days'
-         );
-         //1.- Date:
-         const dateString = deliveryDate.format('dddd, MMMM D')
+ 
+         const dateString = getDateString(deliveryOption);
          // Below we use a ternary operator where if the condition is true we use the question mark value and if the condition is false we use the colon value:
          // 2.- Price:
          const priceString = deliveryOption.priceCents === 0 ? 'Free' : `$${formatCurrency(deliveryOption.priceCents)} -`;
@@ -123,8 +115,8 @@ cart.forEach((cartItem) =>{
            const {productId, deliveryOptionId} = element.dataset
            updateDeliveryOption(productId, deliveryOptionId)
            //--OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO CALL OF MAIN FUNCTION OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-           renderOrderSummary()
-           renderPaymentSummary()
+           renderOrderSummary();
+           renderPaymentSummary();
          });
        });
 

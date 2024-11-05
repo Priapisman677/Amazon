@@ -6,30 +6,30 @@ import { formatCurrency } from './utils/money.js'
 //*Generating the HTML for the main page based on number of products (we loop *for each product*).
 let productsHTML = ''
 //"Products" point to the products.js file:
-products.forEach((product_param, index) =>{
-  // I will temporarily leave the parameter as "product_param" just to show how we access the properties using the name of the parameter not the name or index of the object itself.
+products.forEach((product) =>{
+
   productsHTML += `
   <div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
-              src="${product_param.image}">
+              src="${product.image}">
           </div>
 
           <div class="product-name limit-text-to-2-lines">
-            ${product_param.name}
+            ${product.name}
           </div>
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
             //* Here we need to multiply the number of stars by 10 to match the name of images:
-              src="images/ratings/rating-${product_param.rating.stars * 10}.png">
+              src="images/ratings/rating-${product.rating.stars * 10}.png">
             <div class="product-rating-count link-primary">
-            ${product_param.rating.count}
+            ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-          ${formatCurrency(product_param.priceCents)}
+          ${formatCurrency(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">
@@ -56,7 +56,7 @@ products.forEach((product_param, index) =>{
                    // * What is down here is called data attribute. This way we can store any kind of data inside of an element and access it or change it without having to use document.querySelector('.').innerHTML.
           // *It is important that the attribute starts with "data-" Then we can name it whatever we want. However Please note that it needs to be converted to camel case when we use it in JavaScript (data-product-name :: productName). 
         // * Also notice that we removed the word data.
-          data-product-id="${product_param.id}">
+          data-product-id="${product.id}">
             Add to Cart
           </button>
         </div>
@@ -67,10 +67,8 @@ document.querySelector('.products-grid').innerHTML = productsHTML;
 
 // What is belloww  is executed just once when we reload the page, basically we added event listeners to all the buttons but just once:
 
-document.querySelectorAll('.js-add-to-cart')
-  .forEach((button) => {
+document.querySelectorAll('.js-add-to-cart').forEach((button) =>{
     button.addEventListener('click', () =>{
-      // SuperSimpleDev  declared 'productId' differently here at 12:47:00
       addToCart(button)
       updateCartQuantity()
     });
