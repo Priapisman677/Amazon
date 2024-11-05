@@ -1,36 +1,25 @@
 import { cart, removeFromCart, updateDeliveryOption } from '../../data/cart.js';
-import { products } from '../../data/products.js';
+import { products, getProduct } from '../../data/products.js';
 import formatCurrency from '../utils/money.js'
 import  dayjs  from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { deliveryOptions } from '../../data/deliveryOptions.js';
+import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
 
 //*Down here is the MAIN FUNCTION. We loop through all the items in the cart (right now 2 by default.) Because we want to create the check out tab.
 export function rendeOrderSummary(){ 
 //We will be saving all of the HTML in the next variable:
 let cartSummaryHTML =''
-
-
 cart.forEach((cartItem) =>{
  //... ... ... Next, We save the ID of the cart item in order for us to match it with an ID of the products list and get the information from it.
  const productId = cartItem.productId
-  let matchingProduct;
- //... ... ... Next, We loop through the products list. It is a list of objects containing all the necessary information given an ID: Then, when a match IS MET, we save that information (full object) in the currently empty variable "matchingProduct"
- // "matchingProduct" Will contain all the information of the product.
- products.forEach((product) =>{
-   if (product.id === productId){
-     matchingProduct = product;
-     //! be careful and see how the list 'products' items have a property called '.id' while the  list 'cart' items have a property called ".productId"
-   }})
+ //$ Nov 4: Now we import the function from products.js so we can also use it in other places such as paymentSummaryy: 
+ const matchingProduct = getProduct(productId);
+
+  
+  const deliveryOptionId = cartItem.deliveryOptionId;
+   //$ Nov 4: Now we import the function from products.js so we can also use it in other places such as paymentSummary: 
+  const deliveryOption = getDeliveryOption(deliveryOptionId)
 
   //Nov 3 10:30p.m: Putting the delivery date for each item on the checkout page. The part of the video was at 14:41:00:
-  const deliveryOptionId = cartItem.deliveryOptionId;
-  let deliveryOption;
-  deliveryOptions.forEach((option) =>{
-   if(option.id === deliveryOptionId){
-     deliveryOption = option;
-   }
-  })
-// Nov 3: copy-pasted code to get the date:
      const today = dayjs();
        const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
        //*1.- Date:

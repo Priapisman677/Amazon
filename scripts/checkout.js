@@ -1,2 +1,5 @@
 import { rendeOrderSummary } from './checkout/orderSummary.js'
-rendeOrderSummary()
+import {renderPaymentSummary} from './checkout/paymentSummary.js'
+
+rendeOrderSummary();
+renderPaymentSummary();

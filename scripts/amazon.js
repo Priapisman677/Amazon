@@ -65,7 +65,6 @@ products.forEach((product_param, index) =>{
 
 document.querySelector('.products-grid').innerHTML = productsHTML;
 
-
 // What is belloww  is executed just once when we reload the page, basically we added event listeners to all the buttons but just once:
 
 document.querySelectorAll('.js-add-to-cart')
@@ -76,10 +75,6 @@ document.querySelectorAll('.js-add-to-cart')
       updateCartQuantity()
     });
   });
-
-  
-
-
 
 //Updating the cart quantity
 
