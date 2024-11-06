@@ -8,13 +8,13 @@ export function renderPaymentSummary(){
   let shippingPriceCents = 0;
 
   cart.forEach((cartItem)=>{
-    //getProduct Is a reused function that we had in the main file (checkout) but we are sharing it by exporting it from products JS instead.
+    //getProduct Is a reused function that we had in the main file (checkout) but we are sharing it by exporting it from products.js instead.
     const product = getProduct(cartItem.productId)
     productPriceCents += product.priceCents * cartItem.quantity
 
     const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
     shippingPriceCents += deliveryOption.priceCents
-  })
+  });
    const totalBeforeTaxCents = productPriceCents + shippingPriceCents
    const taxCents = totalBeforeTaxCents * 0.1;
    const totalCents = totalBeforeTaxCents + taxCents

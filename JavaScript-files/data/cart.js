@@ -46,17 +46,6 @@ export function removeFromCart(productId){
   //C:
   saveToStorage();
 }
-  // Another way to go through this function is by creating a new cart like in the commented code below (SSD-13:37:40).
-  // export function removeFromCart(productId){
-    // const newCart = []
-    // cart.forEach((cartItem) =>{
-    //   if( cartItem.productId !== productId){
-    //     newCart.push(cartItem)
-    //   }
-    // });
-    // cart = newCart;
-    //}
-  //However, we can just use the filter method to create a new array with the elements that pass the condition. Remember to type "cart = "
 
   //* Exporting function to update the delivery option of a cart item:
   export function updateDeliveryOption(productId, deliveryOptionId ){
