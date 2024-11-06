@@ -8,8 +8,7 @@ function saveToStorage(){
 }
 
 //* Exporting function to add to cart at click:
-export function addToCart(button){ 
-  const productId = button.dataset.productId;
+export function addToCart(productId){ 
   //Down here "matchingItem" and "existingItem" could be the same variable and use ONLY "existingItem" to become trueTHY or falsY. I will leave it as is for a moment since it could get confusing.
   let matchingItem
   let existingItem

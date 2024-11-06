@@ -1,13 +1,11 @@
-import{ cart, addToCart} from '../data/cart.js';
-import{ products } from '../data/products.js';
-import { formatCurrency } from './utils/money.js'
-
+import { cart, addToCart } from "../data/cart.js";
+import { products } from "../data/products.js";
+import { formatCurrency } from "./utils/money.js";
 
 //*Generating the HTML for the main page based on number of products (we loop *for each product*).
-let productsHTML = ''
+let productsHTML = "";
 //"Products" point to the products.js file:
-products.forEach((product) =>{
-
+products.forEach((product) => {
   productsHTML += `
   <div class="product-container">
           <div class="product-image-container">
@@ -60,27 +58,28 @@ products.forEach((product) =>{
             Add to Cart
           </button>
         </div>
-  `
-})
+  `;
+});
 
-document.querySelector('.products-grid').innerHTML = productsHTML;
+document.querySelector(".products-grid").innerHTML = productsHTML;
 
 // What is belloww  is executed just once when we reload the page, basically we added event listeners to all the buttons but just once:
 
-document.querySelectorAll('.js-add-to-cart').forEach((button) =>{
-    button.addEventListener('click', () =>{
-      addToCart(button)
-      updateCartQuantity()
-    });
+document.querySelectorAll(".js-add-to-cart").forEach((button) => {
+  button.addEventListener("click", () => {
+    const productId = button.dataset.productId;
+    addToCart(productId);
+    updateCartQuantity();
   });
+});
 
 //Updating the cart quantity
 
-function updateCartQuantity(){
-    let carQuantity = 0;
-    cart.forEach((cartItem) => {
-      carQuantity += cartItem.quantity
-    });
-    document.querySelector('.cart-quantity').innerHTML = carQuantity; 
+function updateCartQuantity() {
+  let carQuantity = 0;
+  cart.forEach((cartItem) => {
+    carQuantity += cartItem.quantity;
+  });
+  document.querySelector(".cart-quantity").innerHTML = carQuantity;
 }
-updateCartQuantity()
+updateCartQuantity();
