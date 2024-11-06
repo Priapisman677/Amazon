@@ -1,7 +1,8 @@
 import { cart, removeFromCart, updateDeliveryOption } from '../../data/cart.js';
 import { products, getProduct } from '../../data/products.js';
 import formatCurrency from '../utils/money.js'
-import  dayjs  from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+//!We actually don't need to import dayjs here because we are not using it in this file. We are using it in the deliveryOptions.js file:
+//import  dayjs  from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions, getDeliveryOption, getDateString } from '../../data/deliveryOptions.js';
 import {renderPaymentSummary} from './paymentSummary.js'
 
