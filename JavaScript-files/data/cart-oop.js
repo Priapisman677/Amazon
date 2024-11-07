@@ -61,10 +61,14 @@ function Cart(localStorageKey) {
   return cart;
 }
 const cart1 = Cart("cart-oop");
-// cart.addToCart("5968897c-4d27-4872-89f6-5bcb052746d7");
-console.log(cart1);
+
+cart1.addToCart("5968897c-4d27-4872-89f6-5bcb052746d7");
+// adds a new product to cart1's cartItems.
+console.log("cart1 at index 2: ", cart1.cartItems[2]);
+//we check the cartItems array at index 2 to see if
+// the new product was added.
 
 const cart2 = Cart("cart-2");
-console.log(cart2);
-
+console.log("cart2 at index 1: ", cart2.cartItems[1]);
+console.log("cart2 at index 2: ", cart2.cartItems[2]);
 // console.log(BuninessCart);
