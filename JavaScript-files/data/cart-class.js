@@ -1,12 +1,12 @@
 class Cart {
   //localStorageKey = undefined;
-  localStorageKey;
-  constructor(LOCALStorageKey){
-     //Down here "LOCAL" doesn't have to be all caps but I will leave it like that for clarity:
+  #localStorageKey;
+  constructor(LOCALStorageKey) {
+    //Down here "LOCAL" doesn't have to be all caps but I will leave it like that for clarity:
     this.localStorageKey = LOCALStorageKey;
   }
 
-  cartItems = JSON.parse(localStorage.getItem(this.localStorageKey)) || [
+  cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)) || [
     {
       productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
       quantity: 2,
@@ -20,7 +20,7 @@ class Cart {
   ];
 
   saveToStorage() {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
   }
 
   addToCart(productId) {
@@ -66,7 +66,7 @@ class Cart {
   }
 }
 
-const cart = new Cart('cart-oop');
+const cart = new Cart("cart-oop");
 
 // cart.localStorageKey  = 'cart-oop'
 
@@ -76,10 +76,11 @@ console.log("cart at index 2: ", cart.cartItems[2]);
 //we check the cartItems array at index 2 to see if
 // the new product was added.
 
-const cart2 = new Cart('cart-2');
+const cart2 = new Cart("cart-2");
 console.log("cart2 at index 1: ", cart2.cartItems[1]);
 console.log("cart2 at index 2: ", cart2.cartItems[2]);
-console.log("🚀 ~ cart2:", cart2)
+console.log("🚀 ~ cart2:", cart2);
 // console.log(BuninessCart);
 
-console.log(cart2 instanceof Cart)
+console.log(cart2 instanceof Cart);
+
