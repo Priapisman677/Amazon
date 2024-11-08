@@ -66,21 +66,21 @@ class Cart {
   }
 }
 
-const cart = new Cart("cart-oop");
+// const cart = new Cart("cart-oop");
 
 // cart.localStorageKey  = 'cart-oop'
 
-cart.addToCart("5968897c-4d27-4872-89f6-5bcb052746d7");
+// cart.addToCart("5968897c-4d27-4872-89f6-5bcb052746d7");
 // adds a new product to cart1's cartItems.
-console.log("cart at index 2: ", cart.cartItems[2]);
+// console.log("cart at index 2: ", cart.cartItems[2]);
 //we check the cartItems array at index 2 to see if
 // the new product was added.
 
-const cart2 = new Cart("cart-2");
-console.log("cart2 at index 1: ", cart2.cartItems[1]);
-console.log("cart2 at index 2: ", cart2.cartItems[2]);
-console.log("🚀 ~ cart2:", cart2);
+// const cart2 = new Cart("cart-2");
+// console.log("cart2 at index 1: ", cart2.cartItems[1]);
+// console.log("cart2 at index 2: ", cart2.cartItems[2]);
+// console.log("🚀 ~ cart2:", cart2);
 // console.log(BuninessCart);
 
-console.log(cart2 instanceof Cart);
+// console.log(cart2 instanceof Cart);
 

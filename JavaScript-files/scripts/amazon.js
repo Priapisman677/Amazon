@@ -1,5 +1,5 @@
 import { cart, addToCart } from "../data/cart.js";
-import { products } from "../data/products.js";
+import { products} from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
 //*Generating the HTML for the main page based on number of products (we loop *for each product*).
@@ -20,14 +20,14 @@ products.forEach((product) => {
           <div class="product-rating-container">
             <img class="product-rating-stars"
             //* Here we need to multiply the number of stars by 10 to match the name of images:
-              src="images/ratings/rating-${product.rating.stars * 10}.png">
+              src="${product.getStarsUrl()}">
             <div class="product-rating-count link-primary">
             ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-          ${formatCurrency(product.priceCents)}
+          ${product.getPrice()}
           </div>
 
           <div class="product-quantity-container">

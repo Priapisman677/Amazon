@@ -43,7 +43,7 @@ export function renderOrderSummary() {
             </div>
             <div class="product-price">
             <!-- //*formatCurrency() is imported from a module -->
-            ${formatCurrency(matchingProduct.priceCents)}
+            ${matchingProduct.getPrice()}
             </div>
             <div class="product-quantity">
               <span>
