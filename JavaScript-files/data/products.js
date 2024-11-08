@@ -12,11 +12,12 @@ export function getProduct(cartItemProductId) {
 }
 
 class Product {
-  id;
-  image;
-  name;
-  rating;
-  priceCents;
+  //*Actually, we don't need to declare and initialize the variables when the properties are not private:
+  // id;
+  // image;
+  // name;
+  // rating;
+  // priceCents;
   constructor(productDetails) {
     this.id = productDetails.id;
     this.image = productDetails.image;
@@ -31,8 +32,24 @@ class Product {
   getPrice(){
     return `${formatCurrency(this.priceCents)}`
   }
+  extraInfoHTML(){
+    return `hi`;
+  }
 }
 
+class Clothing extends Product{
+  sizeChartLink
+  constructor(productDetails){
+    super(productDetails)
+    this.sizeChartLink = productDetails.sizeChartLink
+  }
+
+  extraInfoHTML(){
+    super.extraInfoHTML();    return `
+    <a href="${this.sizeChartLink}" target="_blank">Size chart</a>
+    `;
+  }
+}
 
 export const products = [
   {
@@ -505,13 +522,14 @@ export const products = [
     priceCents: 2400,
     keywords: ["sweaters", "hoodies", "apparel", "mens"],
   },
-].map((product) => {
-  return new Product(product);
+].map((productDetails) => {
+  if(productDetails.type === 'clothing'){
+    return new Clothing(productDetails)
+  }
+  return new Product(productDetails);
 })
 
 //*Here we are using map to create a brand new array that will stem from the products array so we will end up with to arrays so be careful with that. Alternatively we could call the map directly on "products" when it is being created so we end up with just one array
 // export const classList = products.map((product) => {
 //   return new Product(product);
 // });
-// console.log(classList);
-
