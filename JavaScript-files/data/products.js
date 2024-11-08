@@ -529,7 +529,36 @@ export const products = [
   return new Product(productDetails);
 })
 
-//*Here we are using map to create a brand new array that will stem from the products array so we will end up with to arrays so be careful with that. Alternatively we could call the map directly on "products" when it is being created so we end up with just one array
+//*Here we are using map to create a brand new array that will stem from the products array so we will end up with to arrays so be careful with that. Alternatively we could call the map directly on "products" when it is being created so we end up with just one array:
 // export const classList = products.map((product) => {
 //   return new Product(product);
 // });
+
+/*
+const date = new Date();
+console.log("🚀 ~ date:", date)
+console.log("🚀 ~ date.toLocaleTimeString():", date.toLocaleTimeString())
+*/
+
+
+// const object2 = {
+//   a : 'cat',
+//   printCat() {
+//     console.log(this.a)
+//   }
+// }
+// object2.printCat()
+
+
+// const object3 = {
+//   a : 'frog',
+//      object4 : {
+//       a: 'dog',
+//       getOuter_a(){
+//         console.log(this.a)
+//         console.log(object3.a)
+//       }
+//     }
+//   }
+
+// object3.object4.getOuter_a()

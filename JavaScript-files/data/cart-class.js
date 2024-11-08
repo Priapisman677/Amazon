@@ -1,26 +1,28 @@
 class Cart {
   //localStorageKey = undefined;
   #localStorageKey;
-  constructor(LOCALStorageKey) {
-    //Down here "LOCAL" doesn't have to be all caps but I will leave it like that for clarity:
-    this.localStorageKey = LOCALStorageKey;
-  }
-
-  cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)) || [
-    {
-      productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-      quantity: 2,
-      deliveryOptionId: "1",
-    },
-    {
-      productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-      quantity: 1,
-      deliveryOptionId: "2",
-    },
+  constructor(LocalStorageKey) {
+    
+    this.#localStorageKey = LocalStorageKey;
+     this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)) || [
+    {productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6", quantity: 2,deliveryOptionId: "1",},
+    {productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d", quantity: 1, deliveryOptionId: "2",},
   ];
+  }
+  
+
+ 
+  //!I'll make a temporary test function:
 
   saveToStorage() {
+    // I believe the issue that I have been having all this night had to be with the following line. Every time I save an item to the cart list it gets set to undefined inside of local storage.
     localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
+    // However it seems like it also has to do with me not declaring card items inside of the constructor the way simple dev did it and the way ChatGPT tells me to do.
+    //More probably it doesn't have to do with that...
+
+    // New update I believe I am getting it I believe The class at this point will always always use "undefined" to create it's cartItems array. I will try to change it to a function and see if it works.
+    //New update: I believe it is not always undefined Since saveToStorage() is called after addToCart() and removeFromCart() it will always be defined.
+    //$ Final update: I was forgetting to add the # to the variable name at  this.localStorageKey = LocalStorageKey;
   }
 
   addToCart(productId) {
@@ -66,21 +68,5 @@ class Cart {
   }
 }
 
-// const cart = new Cart("cart-oop");
-
-// cart.localStorageKey  = 'cart-oop'
-
-// cart.addToCart("5968897c-4d27-4872-89f6-5bcb052746d7");
-// adds a new product to cart1's cartItems.
-// console.log("cart at index 2: ", cart.cartItems[2]);
-//we check the cartItems array at index 2 to see if
-// the new product was added.
-
-// const cart2 = new Cart("cart-2");
-// console.log("cart2 at index 1: ", cart2.cartItems[1]);
-// console.log("cart2 at index 2: ", cart2.cartItems[2]);
-// console.log("🚀 ~ cart2:", cart2);
-// console.log(BuninessCart);
-
-// console.log(cart2 instanceof Cart);
+export const cart1 = new Cart('cart-unique-1');
 
