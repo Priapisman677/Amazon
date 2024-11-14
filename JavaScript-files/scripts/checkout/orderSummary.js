@@ -1,14 +1,20 @@
 import { cart, removeFromCart, updateDeliveryOption } from "../../data/cart.js";
 import { products, getProduct } from "../../data/products.js";
 import formatCurrency from "../utils/money.js";
-//!We actually don't need to import dayjs here because we are not using it in this file. We are using it in the deliveryOptions.js file:
-//import  dayjs  from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+
 import {
   deliveryOptions,
   getDeliveryOption,
   getDateString,
 } from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
+
+
+
+//! 11/11 I now need to add the find method instead of the functions getProduct(cartItemProductId) and getDeliveryOption(deliveryOptionId).
+
+
+
 
 //*Down here is the MAIN FUNCTION. We loop through all the items in the cart (right now 2 by default.) Because we want to create the check out tab.
 export function renderOrderSummary() {
@@ -76,7 +82,6 @@ export function renderOrderSummary() {
   document.querySelector(".js-order-summary").innerHTML = cartSummaryHTML;
 
   //*Creating the HTML for each delivery option PRICE AND DATE of ALL CHECKOUT ITEMS (based on current date) To then insert it in the main HTML for the checkout:
-  //$ Nov 4 note: Normally we wouldn't have to make a function for this but we make it a function because we want to call it when we are creating the main HTML and we also need to pass parameters for the radio selector.
   function deliveryOptionsHTML(matchingProduct, cartItem) {
     let html = "";
     deliveryOptions.forEach((deliveryOption) => {
@@ -121,7 +126,6 @@ export function renderOrderSummary() {
       // const deliveryOptionId = element.dataset.deliveryOptionId
       const { productId, deliveryOptionId } = element.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
-      //--OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO CALL OF MAIN FUNCTION OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
       renderOrderSummary();
       renderPaymentSummary();
     });

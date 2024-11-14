@@ -1,6 +1,6 @@
 import { formatCurrency } from "../scripts/utils/money.js";
 
-//*We are using the following function to find a matching product given an ID and get the information of the product such as name and price. We will export it because we use it twice, once ar OrderSummary and another at payment summary.
+//We are using the following function to find a matching product given an ID and get the information of the product such as name and price. We will export it because we use it twice, once ar OrderSummary and another at payment summary.
 export function getProduct(cartItemProductId) {
   let matchingProduct;
   products.forEach((product) => {
@@ -25,30 +25,31 @@ class Product {
     this.rating = productDetails.rating;
     this.priceCents = productDetails.priceCents;
   }
-  getStarsUrl(){
-    return `images/ratings/rating-${this.rating.stars * 10}.png`
-    
+  getStarsUrl() {
+    return `images/ratings/rating-${this.rating.stars * 10}.png`;
   }
-  getPrice(){
-    return `${formatCurrency(this.priceCents)}`
+  getPrice() {
+    return `${formatCurrency(this.priceCents)}`;
   }
-  extraInfoHTML(){
+  extraInfoHTML() {
     return `hi`;
   }
 }
 
-class Clothing extends Product{
-  sizeChartLink
-  constructor(productDetails){
-    super(productDetails)
-    this.sizeChartLink = productDetails.sizeChartLink
+class Clothing extends Product {
+  constructor(productDetails) {
+    super(productDetails);
+    this.sizeChartLink = productDetails.sizeChartLink;
   }
 
-  extraInfoHTML(){
-    super.extraInfoHTML();    return `
-    <a href="${this.sizeChartLink}" target="_blank">Size chart</a>
-    `;
+  extraInfoHTML() {
+    return ` <a href="${this.sizeChartLink}" target="_blank">Size chart</a>`;
   }
+  //We could use the exact method of extraInfoHTML() from the Product class but we not are using it here to show that we can override the method from the parent class.
+  //If we wanted to use the exact same method we can type:
+  // extraInfoHTML() {
+  //   return super.extraInfoHTML();
+  // }
 }
 
 export const products = [
@@ -523,22 +524,12 @@ export const products = [
     keywords: ["sweaters", "hoodies", "apparel", "mens"],
   },
 ].map((productDetails) => {
-  if(productDetails.type === 'clothing'){
-    return new Clothing(productDetails)
+  if (productDetails.type === "clothing") {
+    return new Clothing(productDetails);
   }
   return new Product(productDetails);
-})
+});
 
-//*Here we are using map to create a brand new array that will stem from the products array so we will end up with to arrays so be careful with that. Alternatively we could call the map directly on "products" when it is being created so we end up with just one array:
-// export const classList = products.map((product) => {
-//   return new Product(product);
-// });
-
-/*
-const date = new Date();
-console.log("🚀 ~ date:", date)
-console.log("🚀 ~ date.toLocaleTimeString():", date.toLocaleTimeString())
-*/
 
 
 // const object2 = {
@@ -548,7 +539,6 @@ console.log("🚀 ~ date.toLocaleTimeString():", date.toLocaleTimeString())
 //   }
 // }
 // object2.printCat()
-
 
 // const object3 = {
 //   a : 'frog',

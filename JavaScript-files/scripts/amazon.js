@@ -4,7 +4,7 @@ import { formatCurrency } from "./utils/money.js";
 
 //*Generating the HTML for the main page based on number of products (we loop *for each product*).
 let productsHTML = "";
-//"Products" point to the products.js file:
+
 products.forEach((product) => {
   productsHTML += `
   <div class="product-container">
@@ -65,8 +65,6 @@ products.forEach((product) => {
 
 document.querySelector(".products-grid").innerHTML = productsHTML;
 
-// What is belloww  is executed just once when we reload the page, basically we added event listeners to all the buttons but just once:
-
 document.querySelectorAll(".js-add-to-cart").forEach((button) => {
   button.addEventListener("click", () => {
     const productId = button.dataset.productId;
@@ -74,8 +72,6 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     updateCartQuantity();
   });
 });
-
-//Updating the cart quantity
 
 function updateCartQuantity() {
   let carQuantity = 0;
