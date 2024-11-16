@@ -1,12 +1,15 @@
 import { cart, addToCart } from "../data/cart.js";
-import { products} from "../data/products.js";
-import { formatCurrency } from "./utils/money.js";
+import { products, loadproducts } from "../data/products.js";
+
+loadproducts(renderProductGrid);
 
 //*Generating the HTML for the main page based on number of products (we loop *for each product*).
-let productsHTML = "";
 
-products.forEach((product) => {
-  productsHTML += `
+function renderProductGrid() {
+  let productsHTML = "";
+
+  products.forEach((product) => {
+    productsHTML += `
   <div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
@@ -27,7 +30,7 @@ products.forEach((product) => {
           </div>
 
           <div class="product-price">
-          ${product.getPrice()}
+           ${product.getPrice()}
           </div>
 
           <div class="product-quantity-container">
@@ -53,31 +56,29 @@ products.forEach((product) => {
           </div>
 
           <button class="add-to-cart-button button-primary js-add-to-cart"
-                   // * What is down here is called data attribute. This way we can store any kind of data inside of an element and access it or change it without having to use document.querySelector('.').innerHTML.
-          // *It is important that the attribute starts with "data-" Then we can name it whatever we want. However Please note that it needs to be converted to camel case when we use it in JavaScript (data-product-name :: productName). 
-        // * Also notice that we removed the word data.
           data-product-id="${product.id}">
             Add to Cart
           </button>
         </div>
   `;
-});
-
-document.querySelector(".products-grid").innerHTML = productsHTML;
-
-document.querySelectorAll(".js-add-to-cart").forEach((button) => {
-  button.addEventListener("click", () => {
-    const productId = button.dataset.productId;
-    addToCart(productId);
-    updateCartQuantity();
   });
-});
 
-function updateCartQuantity() {
-  let carQuantity = 0;
-  cart.forEach((cartItem) => {
-    carQuantity += cartItem.quantity;
+  document.querySelector(".products-grid").innerHTML = productsHTML;
+
+  document.querySelectorAll(".js-add-to-cart").forEach((button) => {
+    button.addEventListener("click", () => {
+      const productId = button.dataset.productId;
+      addToCart(productId);
+      updateCartQuantity();
+    });
   });
-  document.querySelector(".cart-quantity").innerHTML = carQuantity;
+
+  function updateCartQuantity() {
+    let carQuantity = 0;
+    cart.forEach((cartItem) => {
+      carQuantity += cartItem.quantity;
+    });
+    document.querySelector(".cart-quantity").innerHTML = carQuantity;
+  }
+  updateCartQuantity();
 }
-updateCartQuantity();
