@@ -1,6 +1,5 @@
 import { formatCurrency } from "../scripts/utils/money.js";
 
-
 export function getProduct(cartItemProductId) {
   let matchingProduct;
   products.forEach((product) => {
@@ -529,25 +528,29 @@ class Clothing extends Product {
 
 //*Now we will try to get the same array of products but from the backend:
 
+
+
+
 export let products = [];
 
-export function loadproducts(funcParam) {
+export function loadproducts(funcParamResolve) {
   const xhr1 = new XMLHttpRequest();
 
   xhr1.addEventListener("load", () => {
-    // console.log('test 1:',xhr1.response);
+  
     products = JSON.parse(xhr1.response).map((productDetails) => {
       if (productDetails.type === "clothing") {
         return new Clothing(productDetails);
       }
       return new Product(productDetails);
     });
-    console.log("Load products");
-    funcParam();
+    console.log('after cart')
+    funcParamResolve();
+    
   });
 
   xhr1.open("GET", "https://supersimplebackend.dev/products");
   xhr1.send();
+
 }
 
-loadproducts();

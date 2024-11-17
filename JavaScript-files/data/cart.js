@@ -58,3 +58,19 @@ export function removeFromCart(productId){
   matchingItem.deliveryOptionId = deliveryOptionId;
   saveToStorage()
 }
+
+
+
+
+export function loadCart(funcParamResolve) {
+  const xhr1 = new XMLHttpRequest();
+
+  xhr1.addEventListener("load", () => {
+    console.log(xhr1.response)
+
+    funcParamResolve();
+  });
+
+  xhr1.open("GET", "https://supersimplebackend.dev/cart");
+  xhr1.send();
+}
