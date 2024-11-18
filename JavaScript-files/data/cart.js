@@ -66,7 +66,7 @@ export function loadCart(funcParamResolve) {
   const xhr1 = new XMLHttpRequest();
 
   xhr1.addEventListener("load", () => {
-    console.log(xhr1.response)
+   
 
     funcParamResolve();
   });
