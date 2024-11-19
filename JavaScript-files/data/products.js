@@ -56,6 +56,7 @@ class Clothing extends Product {
 export let products = [];
 
 export function loadProductsFetch() {
+  //$ If you trigger an error, use: "https://error.supersimplebackend.dev/products" .
   const promise = fetch("https://supersimplebackend.dev/products")
     .then((response) => {
       return response.json();
@@ -71,6 +72,9 @@ export function loadProductsFetch() {
         return new Product(productDetails);
       });
       return 'test2'
+    }).catch((error)=>{
+      console.log('Unexpected error :(')
+      console.log('information about the error: ', error)
     });
 
   return promise;
@@ -97,8 +101,15 @@ export function loadproducts(funcParamResolve) {
       return new Product(productDetails);
     });
     funcParamResolve();
+
   });
 
+  xhr1.addEventListener('error', (error)=>{
+    console.log('Unexpected error :(')
+    console.log('information about the error: ', error)
+  })
+  //$ If you trigger an error, use: "https://error.supersimplebackend.dev/products" .
   xhr1.open("GET", "https://supersimplebackend.dev/products");
   xhr1.send();
 }
+
