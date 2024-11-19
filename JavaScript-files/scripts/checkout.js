@@ -5,23 +5,26 @@ import { loadCart } from "../data/cart.js";
 
 //*Using Async Await to load both the products and the cart:
 async function loadPage() {
-  try {
+  // try {
     // throw 'error 1';
-    const returnedValue1 = await loadProductsFetch();
+    const resolvedValue2 = await loadProductsFetch();
 
-    const returnedValue2 = await new Promise((resolve2, reject) => {
+    const resolvedValue = await new Promise((resolve2, reject) => {
       loadCart(() => {
         resolve2('67');
         reject("error 2");
       });
     });
-  } catch (error) {
-    console.log("Unexpected error :(");
-    console.log("information about the error: ", error);
-  }
-
+  // } 
+  // catch (error) {
+  //   console.log("Unexpected error :(");
+  //   console.log("information about the error: ", error);
+  // }
+    console.log(products);
   renderOrderSummary();
   renderPaymentSummary();
+  console.log(resolvedValue);
+  console.log(resolvedValue2);
 }
 loadPage();
 
@@ -52,11 +55,11 @@ loadPage();
 /*
 Promise.all([
 
-      // new Promise((resolve1) => {
-      //   loadproducts(() => {
-      //     resolve1('test1');
-      //   });
-      // }),
+    //    new Promise((resolve1) => {
+    //      loadproducts(() => {
+    //        resolve1('test1');
+    //    });
+    // }),
       
       loadProductsFetch(),
 

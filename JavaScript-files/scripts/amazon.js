@@ -1,11 +1,11 @@
 import { cart, addToCart } from "../data/cart.js";
-import { products, loadproducts } from "../data/products.js";
+import {  loadproducts } from "../data/products.js";
 
 loadproducts(renderProductGrid);
 
 //*Generating the HTML for the main page based on number of products (we loop *for each product*).
 
-function renderProductGrid() {
+function renderProductGrid(products) {
   let productsHTML = "";
 
   products.forEach((product) => {

@@ -53,13 +53,15 @@ class Clothing extends Product {
 
 
 //* Using fetch (for CHECKOUT.JS):
-export let products = [];
+ 
+  let products = [];
+
 
 export function loadProductsFetch() {
   //$ If you trigger an error, use: "https://error.supersimplebackend.dev/products" .
   const promise = fetch("https://supersimplebackend.dev/products")
-    .then((response) => {
-      return response.json();
+    .then((response1) => {
+      return response1.json();
     })
     .then((productsData) => {
 
@@ -71,7 +73,7 @@ export function loadProductsFetch() {
         }
         return new Product(productDetails);
       });
-      return 'test2'
+      return 'test2234'
     }).catch((error)=>{
       console.log('Unexpected error :(')
       console.log('information about the error: ', error)
@@ -100,7 +102,7 @@ export function loadproducts(funcParamResolve) {
       }
       return new Product(productDetails);
     });
-    funcParamResolve();
+    funcParamResolve(products);
 
   });
 

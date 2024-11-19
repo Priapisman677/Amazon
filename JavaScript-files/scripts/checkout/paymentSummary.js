@@ -68,7 +68,7 @@ export function renderPaymentSummary() {
 
   document.querySelector(".js-place-order").addEventListener("click", async () => {
     try{
-      const response = await fetch("https://supersimplebackend.dev/orders", {
+      const response1 = await fetch("https://supersimplebackend.dev/orders", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json" 
@@ -77,7 +77,7 @@ export function renderPaymentSummary() {
       });
         //* The code below will run after the await of fetch, This is the natural flow of code using async:
         //* However, remember that response.json() is a promise, so we need to await it:
-        const order = await response.json();
+        const order = await response1.json();
         addOrder(order);
     } catch (error) {
       console.log('unexpected error:',error);
