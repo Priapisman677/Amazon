@@ -52,7 +52,7 @@ class Clothing extends Product {
 //*Now we will try to get the same array of products but from the backend:
 
 
-//* Using fetch:
+//* Using fetch (for CHECKOUT.JS):
 export let products = [];
 
 export function loadProductsFetch() {
@@ -61,12 +61,16 @@ export function loadProductsFetch() {
       return response.json();
     })
     .then((productsData) => {
+
+      console.log('loaded products');
+
       products = productsData.map((productDetails) => {
         if (productDetails.type === "clothing") {
           return new Clothing(productDetails);
         }
         return new Product(productDetails);
       });
+      return 'test2'
     });
 
   return promise;
@@ -80,7 +84,7 @@ loadProductsFetch().then(() => {
 */
 
 
-//* Using XMLHttpRequest:
+//* Using XMLHttpRequest  (for AMAZON.JS):
 export function loadproducts(funcParamResolve) {
   
   const xhr1 = new XMLHttpRequest();
